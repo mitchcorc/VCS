@@ -7,7 +7,8 @@ import java.util.List;
  * @author
  *
  */
-public class User {
+public class User 
+{
 	
 	/* The name of the user. It's a unique identifier for a user. */
 	private final String userName;
@@ -26,22 +27,21 @@ public class User {
 	 * @param username The user name.
 	 * @throws IllegalArgumentException if any argument is null. 
 	 */
-	public User(String userName) {
+	public User(String userName) 
+	{
 		
-		// TODO: Implement this method. The following lines 
-		// are just meant for the method to compile. You can 
-		// remove or edit it in whatever way you like.
-		this.userName = null;
-		this.subRepos = null;
-		this.pendingCheckIns = null;
-		this.workingCopies = null;
+		this.userName = userName;
+		subRepos = new ArrayList<String>();
+		pendingCheckIns = new ArrayList<ChangeSet>();
+		workingCopies = new ArrayList<RepoCopy>();
 	}
 	
 	/**
 	 * Returns the name of the user.
 	 * @return the user name.
 	 */
-	public String getName() {
+	public String getName() 
+	{
 		return this.userName;
 	}
 		
@@ -49,7 +49,8 @@ public class User {
 	 * Returns a copy of list of subscribed repositories.
 	 * @return The subscribed repo list.
 	 */
-	public List<String> getAllSubRepos() {
+	public List<String> getAllSubRepos() 
+	{
 		return new ArrayList<String>(this.subRepos);
 	}
 	
@@ -59,10 +60,19 @@ public class User {
      * @return The working copy if exists, null otherwise.
      * @throws IllegalArgumentException if any argument is null. 
      */
-    public RepoCopy getWorkingCopy(String repoName) {
-		// TODO: Implement this method. The following lines 
-		// are just meant for the method to compile. You can 
-		// remove or edit it in whatever way you like.
+    public RepoCopy getWorkingCopy(String repoName) 
+    {
+    	if (repoName == null)
+    	{
+    		throw new IllegalArgumentException();
+    	}
+		for (int i = 0; i < workingCopies.size(); i++)
+		{
+			if (workingCopies.get(i).getReponame().equals(repoName))
+			{
+				return workingCopies.get(i);
+			}
+		}
     	return null;
 	}
     
@@ -72,13 +82,15 @@ public class User {
 	 * @param repoName The name of the repository to subscribe.
 	 * @throws IllegalArgumentException if any argument is null. 
 	 */
-	public void subscribeRepo(String repoName) {
-		
-		if (repoName == null) {
+	public void subscribeRepo(String repoName) 
+	{
+		if (repoName == null) 
+		{
 			throw new IllegalArgumentException();
 		}
 		
-		if (!this.subRepos.contains(repoName)) {
+		if (!this.subRepos.contains(repoName)) 
+		{
 			this.subRepos.add(repoName); 
 		}
 	}
@@ -89,8 +101,10 @@ public class User {
 	 * @param repoName The name of the repository to unsubscribe. 
 	 * @throws IllegalArgumentException if any argument is null. 
 	 */
-	public void unsubscribeRepo(String repoName) {
-		if (repoName == null) {
+	public void unsubscribeRepo(String repoName) 
+	{
+		if (repoName == null) 
+		{
 			throw new IllegalArgumentException();
 		}
 		this.subRepos.remove(repoName);
@@ -102,8 +116,10 @@ public class User {
 	 * @return True if the repository is subscribed, false otherwise.
 	 * @throws IllegalArgumentException if any argument is null. 
 	 */
-	public boolean isSubRepo(String repoName) {
-		if (repoName == null) {
+	public boolean isSubRepo(String repoName) 
+	{
+		if (repoName == null) 
+		{
 			throw new IllegalArgumentException();
 		}
 		return subRepos.contains(repoName);
@@ -118,7 +134,8 @@ public class User {
 	 * @param repoName The name of the repository on which the change is done.
 	 * @throws IllegalArgumentException if any argument is null. 
 	 */
-	public void addToPendingCheckIn(Document doc, Change.Type type, String repoName) {
+	public void addToPendingCheckIn(Document doc, Change.Type type, String repoName) 
+	{
 		// TODO: Implement this method. 
 	}
 	
@@ -129,7 +146,8 @@ public class User {
 	 * null otherwise.
 	 * @throws IllegalArgumentException if any argument is null. 
 	 */
-    public ChangeSet getPendingCheckIn(String repoName) {
+    public ChangeSet getPendingCheckIn(String repoName) 
+    {
 		// TODO: Implement this method. The following lines 
 		// are just meant for the method to compile. You can 
 		// remove or edit it in whatever way you like.
@@ -144,7 +162,8 @@ public class User {
      * repository, SUCCESS otherwise.
      * @throws IllegalArgumentException if any argument is null. 
      */
-	public ErrorType checkIn(String repoName) {
+	public ErrorType checkIn(String repoName) 
+	{
 		// TODO: Implement this method. The following lines 
 		// are just meant for the method to compile. You can 
 		// remove or edit it in whatever way you like.
@@ -161,7 +180,8 @@ public class User {
 	 * SUCCESS otherwise. 
 	 * @throws IllegalArgumentException if any argument is null. 
 	 */
-	public ErrorType checkOut (String repoName) {
+	public ErrorType checkOut (String repoName) 
+	{
 		// TODO: Implement this method. The following lines 
 		// are just meant for the method to compile. You can 
 		// remove or edit it in whatever way you like.
@@ -169,12 +189,14 @@ public class User {
 	}
 		
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		String str = "=================================== \n";
 		str += "Username: " + this.userName + "\n"
 				+ "-----------Repos------------------ \n";
 		int count = 0;
-		for (String r : this.subRepos) {
+		for (String r : this.subRepos) 
+		{
 			str += ++count + ". " + r + "\n";
 		}
 		str += this.subRepos.size() + " repos(s) subscribed.\n"
